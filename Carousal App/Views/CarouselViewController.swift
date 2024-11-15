@@ -24,7 +24,7 @@ final class CarousalViewController: UIViewController {
         let defaultIndex = viewModel.cards.count / 2
         let view = CarouselView(views: viewModel.cards.map({ card in
             CarouselCardView(card: card)
-        }), configuration: CarouselConfiguration(defaultIndex: viewModel.cards.count + 5))
+        }))
         return view
     }()
     

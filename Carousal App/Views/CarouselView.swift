@@ -11,11 +11,11 @@ import UIKit
 struct CarouselConfiguration {
     var scaleFactor: CGFloat
     var maxItemSize: CGFloat
-    var defaultIndex: Int
+    var defaultIndex: Int?
     
     init(scaleFactor: CGFloat = 1.3,
          maxItemSize: CGFloat = 250,
-         defaultIndex: Int = 0) {
+         defaultIndex: Int? = nil) {
         self.scaleFactor = scaleFactor
         self.maxItemSize = maxItemSize
         self.defaultIndex = defaultIndex
@@ -66,13 +66,18 @@ final class CarouselView: UIView {
          configuration: CarouselConfiguration = CarouselConfiguration()) {
         self.itemViews = views
         self.configuration = configuration
-        // We should check the default Index should be in range, we dont have control over what the client can send
-        if configuration.defaultIndex < 0 {
-            self.currentIndex = 0
-        } else if configuration.defaultIndex > views.count {
-            self.currentIndex = views.count - 1
+        if let defaultIndex = configuration.defaultIndex {
+            // We should check the default Index should be in range, we dont have control over what the client can send
+            if defaultIndex < 0 {
+                self.currentIndex = 0
+            } else if defaultIndex > views.count {
+                self.currentIndex = views.count - 1
+            } else {
+                self.currentIndex = defaultIndex
+            }
         } else {
-            self.currentIndex = configuration.defaultIndex
+            // always shows the middle element as current index if not sent from client
+            self.currentIndex = views.count / 2
         }
         super.init(frame: .zero)
         setupViews()
