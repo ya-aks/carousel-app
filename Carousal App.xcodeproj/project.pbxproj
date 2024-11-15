@@ -29,9 +29,22 @@
 		DAEFDB522CE63E6B0081231E /* Carousal AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Carousal AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		DAEFDBCC2CE725830081231E /* Exceptions for "Carousal App" folder in "Carousal App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = DAEFDB312CE63E6A0081231E /* Carousal App */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DAEFDB342CE63E6A0081231E /* Carousal App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DAEFDBCC2CE725830081231E /* Exceptions for "Carousal App" folder in "Carousal App" target */,
+			);
 			path = "Carousal App";
 			sourceTree = "<group>";
 		};
