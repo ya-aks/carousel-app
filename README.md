@@ -27,3 +27,10 @@ CarouselCardModel
     - This is for storing data related to Carousel Card which right now just has Carousel Image but can be updated individually with new fields.
 
 
+
+https://github.com/user-attachments/assets/bcc7468e-753c-4194-9236-5e3dcedd93f2
+
+
+
+
+
