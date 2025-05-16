@@ -1,0 +1,17 @@
+name: 'Enforce Test Inclusion in PR'
+description: 'Ensures that pull requests include test files for code changes'
+author: 'akshayyadav'
+branding:
+  icon: 'check-circle'
+  color: 'green'
+  
+runs:
+  using: 'composite'
+  steps:
+    - uses: LouisBrunner/checks-action@6b626ffbad7cc56fd58627f774b9067e6118af23
+      if: ${{ always() }}
+      with:
+        token: ${{ inputs.token }}
+        name: Verify tests check status - Tests Inclusion Mandatory Checker
+        status: "completed"
+        conclusion: ${{ 'failure' }}
