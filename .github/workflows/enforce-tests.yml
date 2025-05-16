@@ -12,6 +12,10 @@ jobs:
   enforce-tests:
     runs-on: ubuntu-latest
     steps:
+      - name: Check for skip marker or label
+        shell: bash
+        run: |
+          exit 0
       - uses: LouisBrunner/checks-action@6b626ffbad7cc56fd58627f774b9067e6118af23
         if: ${{ always() }}
         with:
