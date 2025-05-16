@@ -15,4 +15,10 @@ jobs:
             token: ${{ secrets.GITHUB_TOKEN }}
             name: Verify tests check status - Tests Inclusion Mandatory Checker
             status: "completed"
-            conclusion: ${{ 'failure' }}
+            conclusion: 'failure'
+            output: |
+              {
+                "title": "Verify tests check status - Tests Inclusion Mandatory Checker",
+                "summary": "This is a test status check emitted by the workflow.",
+                "text": "You can mandate this check in branch protection rules."
+              }
