@@ -10,25 +10,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Check for test files in PR
-        id: check_tests
-        run: |
-          # Get list of changed files in the PR
-          files=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }}...${{ github.sha }})
-          echo "Changed files:"
-          echo "$files"
-
-          # Check if any test files are included (adjust pattern as needed)
-          if echo "$files" | grep -E '(^|/)test(s)?(/|_|-)|\.(test|spec)\.'; then
-            echo "Test files found."
-            echo "tests_included=true" >> $GITHUB_OUTPUT
-          else
-            echo "No test files found."
-            echo "tests_included=false" >> $GITHUB_OUTPUT
-          fi
-
       - name: Fail if no tests included
-        if: steps.check_tests.outputs.tests_included == 'false'
         run: |
           echo "Error: No test files included in this pull request."
           exit 1
