@@ -12,7 +12,7 @@ jobs:
       - uses: LouisBrunner/checks-action@6b626ffbad7cc56fd58627f774b9067e6118af23
         if: ${{ always() }}
         with:
-            token: ${{ inputs.token }}
+            token: ${{ secrets.GITHUB_TOKEN }}
             name: Verify tests check status - Tests Inclusion Mandatory Checker
             status: "completed"
             conclusion: ${{ 'failure' }}
