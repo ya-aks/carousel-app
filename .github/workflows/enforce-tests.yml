@@ -4,7 +4,10 @@ on:
     types: [opened, synchronize, reopened, reviewed]
   pull_request_review:
     types: [submitted, edited]
-
+permissions:
+  checks: write
+  contents: read
+  
 jobs:
   enforce-tests:
     runs-on: ubuntu-latest
