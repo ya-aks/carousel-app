@@ -1,17 +1,34 @@
-name: 'Enforce Test Inclusion in PR'
-description: 'Ensures that pull requests include test files for code changes'
-author: 'akshayyadav'
-branding:
-  icon: 'check-circle'
-  color: 'green'
-  
-runs:
-  using: 'composite'
-  steps:
-    - uses: LouisBrunner/checks-action@6b626ffbad7cc56fd58627f774b9067e6118af23
-      if: ${{ always() }}
-      with:
-        token: ${{ inputs.token }}
-        name: Verify tests check status - Tests Inclusion Mandatory Checker
-        status: "completed"
-        conclusion: ${{ 'failure' }}
+name: Enforce Test Inclusion in PR
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  enforce-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check for test files in PR
+        id: check_tests
+        run: |
+          # Get list of changed files in the PR
+          files=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }}...${{ github.sha }})
+          echo "Changed files:"
+          echo "$files"
+
+          # Check if any test files are included (adjust pattern as needed)
+          if echo "$files" | grep -E '(^|/)test(s)?(/|_|-)|\.(test|spec)\.'; then
+            echo "Test files found."
+            echo "tests_included=true" >> $GITHUB_OUTPUT
+          else
+            echo "No test files found."
+            echo "tests_included=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Fail if no tests included
+        if: steps.check_tests.outputs.tests_included == 'false'
+        run: |
+          echo "Error: No test files included in this pull request."
+          exit 1
