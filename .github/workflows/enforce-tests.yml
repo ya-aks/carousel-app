@@ -20,7 +20,7 @@ jobs:
           context: Verify tests check status - Tests Inclusion Mandatory Checker
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ 'pending' }}
-          sha: ${{ github.pull_request.head.sha }}
+          sha: ${{ github.event.pull_request.head.sha }}
           
       - name: Check if any label is present
         id: check_label
@@ -38,4 +38,4 @@ jobs:
           context: Verify tests check status - Tests Inclusion Mandatory Checker
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ steps.check_label.outputs.has_labels == 'true' && 'success' || 'failure' }}
-          sha: ${{ github.pull_request.head.sha }}
+          sha: ${{ github.event.pull_request.head.sha }}
