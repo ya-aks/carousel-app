@@ -25,6 +25,7 @@ jobs:
 
       - name: Update check status
         uses: LouisBrunner/checks-action@6b626ffbad7cc56fd58627f774b9067e6118af23
+        if: ${{steps.check_label.outputs.has_labels}}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: Verify tests check status - Tests Inclusion Mandatory Checker
