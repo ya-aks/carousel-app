@@ -30,4 +30,5 @@ jobs:
         if: always()
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          status: ${{ job.status }}
+          sha: ${{ github.pull_request.head.sha }}
+          status: ${{ steps.check_label.outputs.has_labels == 'true' && 'success' || 'failure' }}
