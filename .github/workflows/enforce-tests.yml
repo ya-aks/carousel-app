@@ -1,4 +1,4 @@
-name: Enforce Tests Inclusion 
+name: Tests Inclusion Checker Job 
 
 on:
   pull_request:
@@ -31,7 +31,6 @@ jobs:
             echo "has_labels=true" >> $GITHUB_OUTPUT
           else
             echo "has_labels=false" >> $GITHUB_OUTPUT
-            exit 1
           fi
 
       - uses: myrotvorets/set-commit-status-action@master
