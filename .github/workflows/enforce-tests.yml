@@ -1,4 +1,4 @@
-name: Enforce Test Inclusion in PR
+name: Verify tests check status - Tests Inclusion Mandatory Checker
 
 on:
   pull_request:
@@ -26,8 +26,7 @@ jobs:
             exit 1
           fi
 
-      - name: Verify tests check status - Tests Inclusion Mandatory Checker
-        uses: myrotvorets/set-commit-status-action@master
+      - uses: myrotvorets/set-commit-status-action@master
         if: always()
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
