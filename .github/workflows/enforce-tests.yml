@@ -25,16 +25,9 @@ jobs:
             exit 1
           fi
 
-      - name: Update check status
-        uses: LouisBrunner/checks-action@6b626ffbad7cc56fd58627f774b9067e6118af23
-        if: steps.check_label.outputs.has_labels == 'true'
+      - name: Verify tests check status - Tests Inclusion Mandatory Checker
+        uses: myrotvorets/set-commit-status-action@master
+        if: always()
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          name: Verify tests check status - Tests Inclusion Mandatory Checker
-          sha: ${{ github.event.pull_request.head.sha }}
-          status: completed
-          conclusion: success
-          output: |
-            {
-              "summary": "At least one label present, check passed."
-            }
+          status: ${{ job.status }}
