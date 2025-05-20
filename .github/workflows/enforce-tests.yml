@@ -17,7 +17,8 @@ jobs:
       - name: Check if any label is present
         id: check_label
         run: |
-          if [ "${{ github.event.pull_request.labels }}" != "[]" ]; then
+          labels_count=$(echo '${{ toJson(github.event.pull_request.labels) }}' | jq 'length')
+          if [ "$labels_count" -gt 0 ]; then
             echo "has_labels=true" >> $GITHUB_OUTPUT
           else
             echo "has_labels=false" >> $GITHUB_OUTPUT
