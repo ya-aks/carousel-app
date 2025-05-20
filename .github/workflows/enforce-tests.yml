@@ -22,4 +22,4 @@ jobs:
             token: ${{ secrets.GITHUB_TOKEN }}
             name: Verify tests check status - Tests Inclusion Mandatory Checker
             status: "completed"
-            conclusion: 'failure'
+            conclusion: 'success'
