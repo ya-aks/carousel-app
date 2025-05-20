@@ -14,7 +14,7 @@ jobs:
   enforce-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: myrotvorets/set-commit-status-action@master
+      - uses: myrotvorets/set-commit-status-action@a7f797733339a6fd1d59494e055136118307186a
         if: always()
         with:
           context: Verify tests check status - Tests Inclusion Mandatory Checker
@@ -32,7 +32,7 @@ jobs:
             echo "has_labels=false" >> $GITHUB_OUTPUT
           fi
 
-      - uses: myrotvorets/set-commit-status-action@master
+      - uses: myrotvorets/set-commit-status-action@a7f797733339a6fd1d59494e055136118307186a
         if: always()
         with:
           context: Verify tests check status - Tests Inclusion Mandatory Checker
