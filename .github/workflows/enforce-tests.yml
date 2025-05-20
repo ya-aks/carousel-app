@@ -1,4 +1,4 @@
-name: Enforce Tests Inclusion
+name: Enforce Tests Inclusion 
 
 on:
   pull_request:
@@ -18,7 +18,7 @@ jobs:
       - uses: myrotvorets/set-commit-status-action@master
         if: always()
         with:
-          description: Verify tests check status - Tests Inclusion Mandatory Checker
+          context: Verify tests check status - Tests Inclusion Mandatory Checker
           token: ${{ secrets.GITHUB_TOKEN }}
           sha: ${{ github.pull_request.head.sha }}
           status: ${{ 'pending' }}
@@ -37,7 +37,7 @@ jobs:
       - uses: myrotvorets/set-commit-status-action@master
         if: always()
         with:
-          description: Verify tests check status - Tests Inclusion Mandatory Checker
+          context: Verify tests check status - Tests Inclusion Mandatory Checker
           token: ${{ secrets.GITHUB_TOKEN }}
           sha: ${{ github.pull_request.head.sha }}
           status: ${{ steps.check_label.outputs.has_labels == 'true' && 'success' || 'failure' }}
