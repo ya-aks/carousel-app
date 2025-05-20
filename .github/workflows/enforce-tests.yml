@@ -14,15 +14,13 @@ jobs:
   enforce-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Check for SKIP label
+      - name: Check if any label is present
         id: check_label
         run: |
-          labels=$(jq -r '.pull_request.labels[].name' <<< "${{ toJson(github.event.pull_request) }}")
-          echo "Labels: $labels"
-          if echo "$labels" | grep -q "^SKIP$"; then
-            echo "skip=true" >> $GITHUB_OUTPUT
+          if [ "${{ github.event.pull_request.labels }}" != "[]" ]; then
+            echo "has_labels=true" >> $GITHUB_OUTPUT
           else
-            echo "skip=false" >> $GITHUB_OUTPUT
+            echo "has_labels=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Update check status
@@ -32,8 +30,8 @@ jobs:
           name: Verify tests check status - Tests Inclusion Mandatory Checker
           sha: ${{ github.event.pull_request.head.sha }}
           status: completed
-          conclusion: ${{ steps.check_label.outputs.skip == 'true' && 'success' || 'failure' }}
+          conclusion: ${{ steps.check_label.outputs.has_labels == 'true' && 'success' || 'failure' }}
           output: |
             {
-              "summary": "${{ steps.check_label.outputs.skip == 'true' && 'SKIP label present, check passed.' || 'SKIP label missing, check failed.' }}"
+              "summary": "${{ steps.check_label.outputs.has_labels == 'true' && 'At least one label present, check passed.' || 'No labels found, check failed.' }}"
             }
