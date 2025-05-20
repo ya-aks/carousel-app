@@ -8,7 +8,6 @@ on:
 
 permissions:
   statuses: write
-  checks: write
   contents: read
 
 jobs:
@@ -20,8 +19,8 @@ jobs:
         with:
           context: Verify tests check status - Tests Inclusion Mandatory Checker
           token: ${{ secrets.GITHUB_TOKEN }}
-          sha: ${{ github.pull_request.head.sha }}
           status: ${{ 'pending' }}
+          sha: ${{ github.pull_request.head.sha }}
           
       - name: Check if any label is present
         id: check_label
@@ -38,5 +37,5 @@ jobs:
         with:
           context: Verify tests check status - Tests Inclusion Mandatory Checker
           token: ${{ secrets.GITHUB_TOKEN }}
-          sha: ${{ github.pull_request.head.sha }}
           status: ${{ steps.check_label.outputs.has_labels == 'true' && 'success' || 'failure' }}
+          sha: ${{ github.pull_request.head.sha }}
