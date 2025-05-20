@@ -1,0 +1,41 @@
+name: Tests Inclusion Checker Job 
+
+on:
+  pull_request:
+    types: [labeled, unlabeled]
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  statuses: write
+  contents: read
+
+jobs:
+  enforce-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: myrotvorets/set-commit-status-action@a7f797733339a6fd1d59494e055136118307186a
+        if: always()
+        with:
+          context: Verify tests check status - Tests Inclusion Mandatory Checker
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ 'pending' }}
+          sha: ${{ github.event.pull_request.head.sha }}
+          
+      - name: Check if any label is present
+        id: check_label
+        run: |
+          labels_count=$(echo '${{ toJson(github.event.pull_request.labels) }}' | jq 'length')
+          if [ "$labels_count" -gt 0 ]; then
+            echo "has_labels=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_labels=false" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: myrotvorets/set-commit-status-action@a7f797733339a6fd1d59494e055136118307186a
+        if: always()
+        with:
+          context: Verify tests check status - Tests Inclusion Mandatory Checker
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ steps.check_label.outputs.has_labels == 'true' && 'success' || 'failure' }}
+          sha: ${{ github.event.pull_request.head.sha }}
