@@ -1,0 +1,39 @@
+name: Enforce Test Inclusion in PR
+
+on:
+  pull_request:
+    types: [labeled, unlabeled]
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  checks: write
+  contents: read
+
+jobs:
+  enforce-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if any label is present
+        id: check_label
+        run: |
+          labels_count=$(echo '${{ toJson(github.event.pull_request.labels) }}' | jq 'length')
+          if [ "$labels_count" -gt 0 ]; then
+            echo "has_labels=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_labels=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update check status
+        uses: LouisBrunner/checks-action@6b626ffbad7cc56fd58627f774b9067e6118af23
+        if: steps.check_label.outputs.has_labels == 'true'
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Verify tests check status - Tests Inclusion Mandatory Checker
+          sha: ${{ github.event.pull_request.head.sha }}
+          status: completed
+          conclusion: success
+          output: |
+            {
+              "summary": "At least one label present, check passed."
+            }
